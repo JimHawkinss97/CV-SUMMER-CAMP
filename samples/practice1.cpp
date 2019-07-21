@@ -26,24 +26,37 @@ int main(int argc, char** argv)
     if (parser.has("help"))
     {
         parser.printMessage();
-        return 0;
+        return -1;
     }
     if (!parser.check())
     {
         parser.printErrors();
-        return 0;
+        return -1;
     }
     
     // Load image
     String imgName(parser.get<String>("image"));
+	unsigned int newWidth = parser.get<unsigned>("width");
+	unsigned int newHeight = parser.get<unsigned>("height");
+
+	Mat image = imread(imgName, IMREAD_COLOR);
 
     
     // Filter image
+	GrayFilter gray;
+	//ResizeFilter resFilter(newWidth, newHeight);
 
 
     // Show image
-    
-    
+	namedWindow("Out", WINDOW_AUTOSIZE);
+	namedWindow("GrayFilter", WINDOW_AUTOSIZE);
+	//namedWindow("Resize", WINDOW_AUTOSIZE);
+
+	imshow("Out", image);
+	imshow("GrayFilter", gray.ProcessImage(image));
+	//imshow("Resize", resFilter.ProcessImage(image));
+
+	waitKey(0);
     
     
     
